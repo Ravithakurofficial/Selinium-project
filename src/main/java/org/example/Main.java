@@ -18,8 +18,12 @@ public class Main {
         // Set the ChromeDriver path if not already in PATH
 
         WebDriver driver = new ChromeDriver();
-        driver.navigate().to("https://www.youtube.com");
-        LoginWithselenium log = new LoginWithselenium();
-        log.Login();
+        driver.navigate().to("http://eaapp.somee.com");
+        HomePage hp = new HomePage(driver);
+        var perfornm = hp.clickLogin();
+        perfornm.Login("admin","password");
+        hp.clickemplist();
+        EmplyoeePage empPage = hp.clickemplist();
+        empPage.clickNewEMp();
     }
 }

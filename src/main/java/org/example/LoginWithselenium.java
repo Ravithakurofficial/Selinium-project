@@ -11,20 +11,25 @@ import java.time.Duration;
 import java.util.ArrayList;
 
 public class LoginWithselenium {
-    public void Login(){
-        WebDriver driver = new ChromeDriver();
-        driver.navigate().to("https://test.io/company/become-a-tester");
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement btntxt = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"main\"]/div/div[1]/section/div[2]/div[4]/div/a")));
-        btntxt.click();
-        ArrayList<String> list = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(list.get(list.size()-1));
-        var emailElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user_email")));
-        emailElement.sendKeys("Test123@gmail.com");
-        var passElement = driver.findElement(By.id("user_password"));
-        passElement.sendKeys("123456");
-        var hidElement = driver.findElement(By.xpath("//*[@id=\"new_user\"]/div[2]/div/div[2]"));
-        hidElement.click();
+    //Getting Web Driver From Main Class Using Constructor
+    private WebDriver driver;
+    private By emaill = By.name("UserName");
+    private By Passwordl = By.name("Password");
+    private By btnl = By.cssSelector(".btn");
+
+    //Constructor Class
+    public LoginWithselenium(WebDriver driver){
+        this.driver = driver;
+    }
+
+    //Login Operation
+    public HomePage Login(String Email,String Password){
+        //give vales to elements
+        driver.findElement(emaill).sendKeys(Email);
+        driver.findElement(Passwordl).sendKeys(Password);
+        driver.findElement(btnl).click();
+        //returning to the home page
+        return new HomePage(driver);
     }
 
 }
